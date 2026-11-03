@@ -1,0 +1,153 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="home">
+			<section class="hero">
+				<p class="brand-mark">{SITE_TITLE}</p>
+				<h1 class="reveal">写给自己的蓝调笔记</h1>
+				<p class="lede reveal delay-1">
+					{SITE_AUTHOR} 的个人站点 — 想法、技术与日常，慢慢沉淀成歌。
+				</p>
+				<div class="hero-cta reveal delay-2">
+					<a class="btn primary" href="/blog/">阅读文章</a>
+					<a class="btn ghost" href="/about/">关于我</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.home {
+		width: min(720px, calc(100% - 2em));
+		min-height: calc(100vh - 11rem);
+		display: flex;
+		align-items: center;
+		padding-block: 2.5rem 3.5rem;
+	}
+
+	.hero {
+		width: 100%;
+	}
+
+	.brand-mark {
+		margin: 0 0 1rem;
+		font-family: var(--font-display), sans-serif;
+		font-size: clamp(2.6rem, 9vw, 4.4rem);
+		font-weight: 800;
+		letter-spacing: -0.045em;
+		line-height: 0.95;
+		color: var(--ink);
+		animation: rise 0.9s ease both;
+	}
+
+	.hero h1 {
+		margin: 0 0 0.85rem;
+		font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		color: var(--ink-soft);
+		max-width: 16ch;
+	}
+
+	.lede {
+		margin: 0 0 2rem;
+		max-width: 32ch;
+		font-size: 1.12rem;
+		color: rgb(var(--gray));
+	}
+
+	.hero-cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.7rem 1.25rem;
+		border-radius: 999px;
+		text-decoration: none;
+		font-family: var(--font-display), sans-serif;
+		font-weight: 600;
+		font-size: 0.95rem;
+		letter-spacing: -0.01em;
+		transition:
+			transform 0.2s ease,
+			background 0.2s ease,
+			color 0.2s ease,
+			border-color 0.2s ease;
+	}
+
+	.btn:hover {
+		transform: translateY(-1px);
+	}
+
+	.btn.primary {
+		background: var(--ink);
+		color: #f4f8fb;
+		border: 1px solid var(--ink);
+	}
+	.btn.primary:hover {
+		background: var(--foam-deep);
+		border-color: var(--foam-deep);
+		color: #fff;
+	}
+
+	.btn.ghost {
+		background: transparent;
+		color: var(--ink);
+		border: 1px solid rgba(28, 45, 69, 0.28);
+	}
+	.btn.ghost:hover {
+		border-color: var(--foam);
+		color: var(--foam-deep);
+	}
+
+	.reveal {
+		opacity: 0;
+		transform: translateY(12px);
+		animation: rise 0.85s ease both;
+	}
+	.delay-1 {
+		animation-delay: 0.12s;
+	}
+	.delay-2 {
+		animation-delay: 0.24s;
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (max-width: 560px) {
+		.home {
+			align-items: flex-end;
+			padding-bottom: 2.5rem;
+		}
+		.lede {
+			max-width: none;
+		}
+	}
+</style>
