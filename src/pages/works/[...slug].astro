@@ -1,0 +1,43 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import MarkdownPage from '../../layouts/MarkdownPage.astro';
+
+export async function getStaticPaths() {
+	const works = await getCollection('works');
+	return works.map((work) => ({
+		params: { slug: work.id },
+		props: work,
+	}));
+}
+
+type Props = CollectionEntry<'works'>;
+
+const work = Astro.props;
+const { Content } = await render(work);
+
+const kindLabel = {
+	site: '站点',
+	game: '小游戏',
+	other: '其他',
+} as const;
+
+const metaParts = [kindLabel[work.data.kind], work.data.year?.toString()].filter(Boolean);
+---
+
+<MarkdownPage
+	title={work.data.title}
+	description={work.data.description}
+	eyebrow="个人作品展示"
+	meta={metaParts.join(' · ')}
+>
+	{
+		work.data.url && (
+			<p>
+				<a href={work.data.url} target="_blank" rel="noopener noreferrer">
+					打开链接
+				</a>
+			</p>
+		)
+	}
+	<Content />
+</MarkdownPage>

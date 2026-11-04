@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SECTIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
@@ -17,12 +17,28 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				<p class="brand-mark">{SITE_TITLE}</p>
 				<h1 class="reveal">写给自己的蓝调笔记</h1>
 				<p class="lede reveal delay-1">
-					{SITE_AUTHOR} 的个人站点 — 想法、技术与日常，慢慢沉淀成歌。
+					{SITE_TITLE} 的个人站点 — 想法、材料、作品，慢慢沉淀成歌。
 				</p>
 				<div class="hero-cta reveal delay-2">
-					<a class="btn primary" href="/blog/">阅读文章</a>
+					<a class="btn primary" href="/thoughts/">先读思考</a>
 					<a class="btn ghost" href="/about/">关于我</a>
 				</div>
+			</section>
+
+			<section class="paths reveal delay-3" aria-label="站点分区">
+				<p class="paths-label">四个角落</p>
+				<ul>
+					{
+						SECTIONS.map((section) => (
+							<li>
+								<a href={section.href}>
+									<span class="path-name">{section.label}</span>
+									<span class="path-blurb">{section.blurb}</span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
 			</section>
 		</main>
 		<Footer />
@@ -32,14 +48,16 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 <style>
 	.home {
 		width: min(720px, calc(100% - 2em));
-		min-height: calc(100vh - 11rem);
-		display: flex;
-		align-items: center;
 		padding-block: 2.5rem 3.5rem;
 	}
 
 	.hero {
 		width: 100%;
+		min-height: calc(100vh - 14rem);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-bottom: 2.5rem;
 	}
 
 	.brand-mark {
@@ -64,7 +82,7 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 	.lede {
 		margin: 0 0 2rem;
-		max-width: 32ch;
+		max-width: 34ch;
 		font-size: 1.12rem;
 		color: rgb(var(--gray));
 	}
@@ -80,7 +98,7 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		align-items: center;
 		justify-content: center;
 		padding: 0.7rem 1.25rem;
-		border-radius: 999px;
+		border-radius: 4px;
 		text-decoration: none;
 		font-family: var(--font-display), sans-serif;
 		font-weight: 600;
@@ -118,6 +136,62 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		color: var(--foam-deep);
 	}
 
+	.paths {
+		padding-top: 0.5rem;
+		border-top: 1px solid rgba(90, 112, 138, 0.18);
+	}
+
+	.paths-label {
+		margin: 0 0 1.25rem;
+		font-family: var(--font-display), sans-serif;
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--foam-deep);
+	}
+
+	.paths ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.paths li a {
+		display: grid;
+		gap: 0.25rem;
+		padding: 1.1rem 0;
+		border-bottom: 1px solid rgba(90, 112, 138, 0.14);
+		text-decoration: none;
+		color: inherit;
+		transition: color 0.2s ease;
+	}
+
+	.paths li:first-child a {
+		padding-top: 0.25rem;
+	}
+
+	.paths li a:hover .path-name {
+		color: var(--foam-deep);
+	}
+
+	.path-name {
+		font-family: var(--font-display), sans-serif;
+		font-size: 1.2rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--ink);
+	}
+
+	.path-blurb {
+		font-size: 1rem;
+		color: rgb(var(--gray));
+		max-width: 36ch;
+	}
+
 	.reveal {
 		opacity: 0;
 		transform: translateY(12px);
@@ -128,6 +202,9 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	}
 	.delay-2 {
 		animation-delay: 0.24s;
+	}
+	.delay-3 {
+		animation-delay: 0.36s;
 	}
 
 	@keyframes rise {
@@ -142,11 +219,13 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	}
 
 	@media (max-width: 560px) {
-		.home {
-			align-items: flex-end;
-			padding-bottom: 2.5rem;
+		.hero {
+			min-height: calc(100vh - 11rem);
+			justify-content: flex-end;
+			padding-bottom: 2rem;
 		}
-		.lede {
+		.lede,
+		.path-blurb {
 			max-width: none;
 		}
 	}

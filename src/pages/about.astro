@@ -1,17 +1,241 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { GITHUB_URL, GITHUB_USER, SITE_TITLE } from '../consts';
+
+interface PublicProfile {
+	login: string;
+	avatar_url: string;
+	html_url: string;
+	bio: string | null;
+	company: string | null;
+	location: string | null;
+	blog: string | null;
+	twitter_username: string | null;
+}
+
+// Offline/API-failure fallback: brand handle only — never hardcode a legal name.
+const fallback: PublicProfile = {
+	login: GITHUB_USER,
+	avatar_url: `https://github.com/${GITHUB_USER}.png`,
+	html_url: GITHUB_URL,
+	bio: null,
+	company: null,
+	location: null,
+	blog: null,
+	twitter_username: null,
+};
+
+let profile = fallback;
+try {
+	const res = await fetch(`https://api.github.com/users/${GITHUB_USER}`, {
+		headers: {
+			Accept: 'application/vnd.github+json',
+			'User-Agent': `${GITHUB_USER}-site`,
+		},
+	});
+	if (res.ok) {
+		const data = (await res.json()) as Record<string, unknown>;
+		// Public fields only. Intentionally omit GitHub `name` / email so the site
+		// stays on brand handle purebluesong and does not republish legal-name traces.
+		profile = {
+			login: typeof data.login === 'string' ? data.login : fallback.login,
+			avatar_url: typeof data.avatar_url === 'string' ? data.avatar_url : fallback.avatar_url,
+			html_url: typeof data.html_url === 'string' ? data.html_url : fallback.html_url,
+			bio: typeof data.bio === 'string' ? data.bio : null,
+			company: typeof data.company === 'string' ? data.company : null,
+			location: typeof data.location === 'string' ? data.location : null,
+			blog: typeof data.blog === 'string' && data.blog ? data.blog : null,
+			twitter_username:
+				typeof data.twitter_username === 'string' ? data.twitter_username : null,
+		};
+	}
+} catch {
+	profile = fallback;
+}
+
+const displayName = profile.login;
+const blogHref = profile.blog
+	? profile.blog.startsWith('http')
+		? profile.blog
+		: `https://${profile.blog}`
+	: null;
 ---
 
-<Layout
-	title="关于瑞鹏"
-	description="purebluesong / 瑞鹏的个人介绍"
-	pubDate={new Date('2026-11-03')}
->
-	<p>
-		你好，我是 <strong>瑞鹏</strong>（purebluesong）。这里是我的个人博客，用来写下技术笔记、项目沉淀，以及偶尔闪过的想法。
-	</p>
-	<p>
-		站点托管在 GitHub Pages，用 Astro 构建成静态站点。欢迎通过
-		<a href="https://github.com/purebluesong">GitHub</a> 找到我。
-	</p>
-</Layout>
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title={`个人信息 · ${SITE_TITLE}`}
+			description="仅展示 GitHub 上公开可见的简介与链接。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="page-title">个人信息</h1>
+			<p class="page-lede">只放 GitHub 公开资料里能看到的字段，不含私人邮箱。</p>
+
+			<section class="profile">
+				<img
+					class="avatar"
+					src={profile.avatar_url}
+					alt={`${displayName} 的头像`}
+					width="120"
+					height="120"
+				/>
+				<div class="identity">
+					<p class="name">{displayName}</p>
+					<p class="handle">GitHub @{profile.login}</p>
+					{
+						profile.bio ? (
+							<p class="bio">{profile.bio}</p>
+						) : (
+							<p class="bio muted">GitHub 简介暂未填写。</p>
+						)
+					}
+				</div>
+			</section>
+
+			<dl class="facts">
+				{
+					profile.company && (
+						<>
+							<dt>公司</dt>
+							<dd>{profile.company}</dd>
+						</>
+					)
+				}
+				{
+					profile.location && (
+						<>
+							<dt>地点</dt>
+							<dd>{profile.location}</dd>
+						</>
+					)
+				}
+			</dl>
+
+			<ul class="links">
+				<li>
+					<a href={profile.html_url} target="_blank" rel="noopener noreferrer">
+						GitHub 主页
+					</a>
+				</li>
+				{
+					blogHref && (
+						<li>
+							<a href={blogHref} target="_blank" rel="noopener noreferrer">
+								个人站点链接
+							</a>
+						</li>
+					)
+				}
+				{
+					profile.twitter_username && (
+						<li>
+							<a
+								href={`https://twitter.com/${profile.twitter_username}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								@{profile.twitter_username}
+							</a>
+						</li>
+					)
+				}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+	}
+	.page-title {
+		margin: 0 0 0.5rem;
+		font-size: clamp(1.8rem, 4vw, 2.4rem);
+	}
+	.page-lede {
+		margin: 0 0 2rem;
+		color: rgb(var(--gray));
+		max-width: 36ch;
+	}
+	.profile {
+		display: flex;
+		align-items: flex-start;
+		gap: 1.25rem;
+		margin-bottom: 1.75rem;
+	}
+	.avatar {
+		width: 96px;
+		height: 96px;
+		border-radius: 50%;
+		object-fit: cover;
+		flex-shrink: 0;
+		box-shadow: var(--box-shadow);
+	}
+	.identity {
+		min-width: 0;
+	}
+	.name {
+		margin: 0.15rem 0 0.2rem;
+		font-family: var(--font-display), sans-serif;
+		font-size: 1.6rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--ink);
+	}
+	.handle {
+		margin: 0 0 0.75rem;
+		color: rgb(var(--gray));
+		font-size: 1rem;
+	}
+	.bio {
+		margin: 0;
+		max-width: 36ch;
+	}
+	.bio.muted {
+		color: rgb(var(--gray));
+	}
+	.facts {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.45rem 1rem;
+		margin: 0 0 1.75rem;
+		max-width: 28rem;
+	}
+	.facts dt {
+		margin: 0;
+		color: rgb(var(--gray));
+		font-size: 0.95rem;
+	}
+	.facts dd {
+		margin: 0;
+		color: var(--ink-soft);
+	}
+	.links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+	}
+	.links a {
+		font-family: var(--font-display), sans-serif;
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.links a:hover {
+		text-decoration: underline;
+	}
+	@media (max-width: 560px) {
+		.profile {
+			flex-direction: column;
+		}
+	}
+</style>

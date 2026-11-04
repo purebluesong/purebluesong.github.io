@@ -1,0 +1,67 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	eyebrow?: string;
+	meta?: string;
+}
+
+const { title, description, eyebrow, meta } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="prose">
+				<header class="title">
+					{eyebrow && <p class="eyebrow">{eyebrow}</p>}
+					{meta && <p class="meta">{meta}</p>}
+					<h1>{title}</h1>
+					<hr />
+				</header>
+				<slot />
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.prose {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 1em 0 2em;
+		color: var(--ink-soft);
+	}
+	.title {
+		margin-bottom: 1.25em;
+		padding-top: 0.5em;
+	}
+	.title h1 {
+		margin: 0 0 0.5em;
+	}
+	.eyebrow {
+		margin: 0 0 0.35em;
+		font-family: var(--font-display), sans-serif;
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--foam-deep);
+	}
+	.meta {
+		margin: 0 0 0.65em;
+		color: rgb(var(--gray));
+		font-size: 0.95rem;
+	}
+</style>

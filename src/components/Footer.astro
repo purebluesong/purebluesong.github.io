@@ -1,12 +1,12 @@
 ---
-import { GITHUB_URL, SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { GITHUB_URL, SITE_TITLE } from '../consts';
 
 const today = new Date();
 ---
 
 <footer>
 	<p>
-		&copy; {today.getFullYear()} {SITE_AUTHOR} · {SITE_TITLE}
+		&copy; {today.getFullYear()} {SITE_TITLE}
 	</p>
 	<div class="social-links">
 		<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">

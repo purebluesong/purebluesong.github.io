@@ -10,6 +10,10 @@ export default defineConfig({
 	base: '/',
 	output: 'static',
 	integrations: [mdx(), sitemap()],
+	redirects: {
+		'/blog': '/thoughts',
+		'/blog/[...slug]': '/thoughts/[...slug]',
+	},
 	fonts: [
 		{
 			provider: fontProviders.google(),
