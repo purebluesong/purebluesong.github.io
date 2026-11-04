@@ -1,5 +1,5 @@
 ---
-import { GITHUB_URL, SITE_TITLE } from '../consts';
+import { GITHUB_URL, SECTIONS, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
@@ -7,9 +7,13 @@ import HeaderLink from './HeaderLink.astro';
 	<nav>
 		<a class="brand" href="/">{SITE_TITLE}</a>
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			{
+				SECTIONS.map((section) => (
+					<HeaderLink href={section.href} title={section.label}>
+						{section.nav}
+					</HeaderLink>
+				))
+			}
 		</div>
 		<div class="social-links">
 			<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
@@ -86,7 +90,8 @@ import HeaderLink from './HeaderLink.astro';
 			display: none;
 		}
 		.internal-links :global(a) {
-			padding-inline: 0.4rem;
+			padding-inline: 0.35rem;
+			font-size: 0.9rem;
 		}
 	}
 </style>

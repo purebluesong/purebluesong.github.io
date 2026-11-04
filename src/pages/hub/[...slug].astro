@@ -1,0 +1,28 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import MarkdownPage from '../../layouts/MarkdownPage.astro';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('hub');
+	return entries.map((entry) => ({
+		params: { slug: entry.id },
+		props: entry,
+	}));
+}
+
+type Props = CollectionEntry<'hub'>;
+
+const entry = Astro.props;
+const { Content } = await render(entry);
+const slash = entry.id.indexOf('/');
+const group = slash === -1 ? '总览' : entry.id.slice(0, slash);
+const groupLabel = group === 'people' ? '劣迹人事整理' : group === '总览' ? '信息整合' : group;
+---
+
+<MarkdownPage
+	title={entry.data.title}
+	description={entry.data.description}
+	eyebrow={groupLabel}
+>
+	<Content />
+</MarkdownPage>

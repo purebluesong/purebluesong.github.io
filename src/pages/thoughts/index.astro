@@ -5,9 +5,9 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('thoughts')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
@@ -15,14 +15,22 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title={`Blog · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={`个人思考 · ${SITE_TITLE}`}
+			description="瑞鹏写下的想法、技术笔记与日常。"
+		/>
 		<style>
 			main {
 				width: 720px;
 			}
 			.page-title {
-				margin: 0 0 1.75rem;
+				margin: 0 0 0.5rem;
 				font-size: clamp(1.8rem, 4vw, 2.4rem);
+			}
+			.page-lede {
+				margin: 0 0 1.75rem;
+				color: rgb(var(--gray));
+				max-width: 36ch;
 			}
 			ul {
 				display: flex;
@@ -69,13 +77,14 @@ const posts = (await getCollection('blog')).sort(
 	<body>
 		<Header />
 		<main>
-			<h1 class="page-title">Blog</h1>
+			<h1 class="page-title">个人思考</h1>
+			<p class="page-lede">按时间写下正在想的事。技术、项目、日常都可以。</p>
 			<section>
 				<ul>
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
+								<a href={`/thoughts/${post.id}/`}>
 									{post.data.heroImage && (
 										<Image width={720} height={360} src={post.data.heroImage} alt="" />
 									)}

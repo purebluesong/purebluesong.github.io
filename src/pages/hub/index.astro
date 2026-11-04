@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const entries = (await getCollection('hub')).sort((a, b) => {
+	const orderA = a.data.order ?? 100;
+	const orderB = b.data.order ?? 100;
+	if (orderA !== orderB) return orderA - orderB;
+	return a.data.title.localeCompare(b.data.title, 'zh-CN');
+});
+
+const groups = new Map<string, typeof entries>();
+for (const entry of entries) {
+	const slash = entry.id.indexOf('/');
+	const groupKey = slash === -1 ? '总览' : entry.id.slice(0, slash);
+	const list = groups.get(groupKey) ?? [];
+	list.push(entry);
+	groups.set(groupKey, list);
+}
+
+const groupLabels: Record<string, string> = {
+	总览: '总览',
+	people: '劣迹人事整理',
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title={`信息整合 · ${SITE_TITLE}`}
+			description="静态信息条目与专题整理，可继续往下加页。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="page-title">信息整合</h1>
+			<p class="page-lede">不赶时间线的静态材料。按主题分册，条目可以一直加。</p>
+			{
+				[...groups.entries()].map(([key, items]) => (
+					<section class="group">
+						<h2>{groupLabels[key] ?? key}</h2>
+						<ul>
+							{items.map((entry) => (
+								<li>
+									<a href={`/hub/${entry.id}/`}>
+										<span class="title">{entry.data.title}</span>
+										<span class="excerpt">{entry.data.description}</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+	}
+	.page-title {
+		margin: 0 0 0.5rem;
+		font-size: clamp(1.8rem, 4vw, 2.4rem);
+	}
+	.page-lede {
+		margin: 0 0 2rem;
+		color: rgb(var(--gray));
+		max-width: 38ch;
+	}
+	.group {
+		margin-bottom: 2.25rem;
+	}
+	.group h2 {
+		margin: 0 0 0.85rem;
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--foam-deep);
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	li a {
+		display: grid;
+		gap: 0.3rem;
+		padding: 1rem 0;
+		border-bottom: 1px solid rgba(90, 112, 138, 0.16);
+		text-decoration: none;
+		color: inherit;
+	}
+	li a:hover .title {
+		color: var(--foam-deep);
+	}
+	.title {
+		font-family: var(--font-display), sans-serif;
+		font-size: 1.25rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--ink);
+	}
+	.excerpt {
+		color: rgb(var(--gray));
+		font-size: 0.98rem;
+	}
+</style>

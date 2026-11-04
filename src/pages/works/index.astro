@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const kindLabel = {
+	site: '站点',
+	game: '小游戏',
+	other: '其他',
+} as const;
+
+const works = (await getCollection('works')).sort((a, b) => {
+	const orderA = a.data.order ?? 100;
+	const orderB = b.data.order ?? 100;
+	if (orderA !== orderB) return orderA - orderB;
+	return a.data.title.localeCompare(b.data.title, 'zh-CN');
+});
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title={`个人作品展示 · ${SITE_TITLE}`}
+			description="瑞鹏做过的站点、小游戏与其他小制作。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="page-title">个人作品展示</h1>
+			<p class="page-lede">站点、小游戏，以及值得留下来的小制作。</p>
+			<ul>
+				{
+					works.map((work) => (
+						<li>
+							<a href={`/works/${work.id}/`}>
+								<span class="kind">{kindLabel[work.data.kind]}</span>
+								<span class="title">{work.data.title}</span>
+								<span class="excerpt">{work.data.description}</span>
+								{work.data.year && <span class="year">{work.data.year}</span>}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 720px;
+	}
+	.page-title {
+		margin: 0 0 0.5rem;
+		font-size: clamp(1.8rem, 4vw, 2.4rem);
+	}
+	.page-lede {
+		margin: 0 0 1.75rem;
+		color: rgb(var(--gray));
+		max-width: 36ch;
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	li a {
+		display: grid;
+		gap: 0.35rem;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid rgba(90, 112, 138, 0.16);
+		text-decoration: none;
+		color: inherit;
+	}
+	li a:hover .title {
+		color: var(--foam-deep);
+	}
+	.kind {
+		font-family: var(--font-display), sans-serif;
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		color: var(--foam-deep);
+	}
+	.title {
+		font-family: var(--font-display), sans-serif;
+		font-size: 1.35rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--ink);
+	}
+	.excerpt {
+		color: rgb(var(--gray));
+		font-size: 1rem;
+	}
+	.year {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+	}
+</style>
