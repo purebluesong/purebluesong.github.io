@@ -2,9 +2,8 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'purebluesong';
-export const SITE_AUTHOR = '瑞鹏';
 export const SITE_DESCRIPTION =
-	'瑞鹏的个人站点 — 个人思考、信息整合、作品展示，以及公开可查的个人信息。';
+	'purebluesong 的个人站点 — 个人思考、信息整合、作品展示，以及公开可查的个人信息。';
 export const GITHUB_USER = 'purebluesong';
 export const GITHUB_URL = `https://github.com/${GITHUB_USER}`;
 

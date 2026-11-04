@@ -7,4 +7,4 @@ year: 2026
 order: 1
 ---
 
-用 Astro 搭的静态站，托管在 GitHub Pages。品牌是 purebluesong / 瑞鹏，墨蓝潮汐底色，字体 Syne + Source Serif 4。
+用 Astro 搭的静态站，托管在 GitHub Pages。品牌是 purebluesong，墨蓝潮汐底色，字体 Syne + Source Serif 4。

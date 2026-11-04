@@ -2,11 +2,10 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { GITHUB_URL, GITHUB_USER, SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { GITHUB_URL, GITHUB_USER, SITE_TITLE } from '../consts';
 
 interface PublicProfile {
 	login: string;
-	name: string | null;
 	avatar_url: string;
 	html_url: string;
 	bio: string | null;
@@ -16,10 +15,10 @@ interface PublicProfile {
 	twitter_username: string | null;
 }
 
+// Offline/API-failure fallback: brand handle only — never hardcode a legal name.
 const fallback: PublicProfile = {
 	login: GITHUB_USER,
-	name: SITE_AUTHOR,
-	avatar_url: `https://avatars.githubusercontent.com/${GITHUB_USER}`,
+	avatar_url: `https://github.com/${GITHUB_USER}.png`,
 	html_url: GITHUB_URL,
 	bio: null,
 	company: null,
@@ -38,9 +37,10 @@ try {
 	});
 	if (res.ok) {
 		const data = (await res.json()) as Record<string, unknown>;
+		// Public fields only. Intentionally omit GitHub `name` / email so the site
+		// stays on brand handle purebluesong and does not republish legal-name traces.
 		profile = {
 			login: typeof data.login === 'string' ? data.login : fallback.login,
-			name: typeof data.name === 'string' ? data.name : null,
 			avatar_url: typeof data.avatar_url === 'string' ? data.avatar_url : fallback.avatar_url,
 			html_url: typeof data.html_url === 'string' ? data.html_url : fallback.html_url,
 			bio: typeof data.bio === 'string' ? data.bio : null,
@@ -55,7 +55,7 @@ try {
 	profile = fallback;
 }
 
-const displayName = profile.name || SITE_AUTHOR;
+const displayName = profile.login;
 const blogHref = profile.blog
 	? profile.blog.startsWith('http')
 		? profile.blog
@@ -87,7 +87,7 @@ const blogHref = profile.blog
 				/>
 				<div class="identity">
 					<p class="name">{displayName}</p>
-					<p class="handle">@{profile.login}</p>
+					<p class="handle">GitHub @{profile.login}</p>
 					{
 						profile.bio ? (
 							<p class="bio">{profile.bio}</p>

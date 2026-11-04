@@ -1,6 +1,6 @@
 # purebluesong.github.io
 
-瑞鹏（purebluesong）的个人站点，基于 [Astro](https://astro.build/) 静态构建，托管于 GitHub Pages。
+purebluesong 的个人站点，基于 [Astro](https://astro.build/) 静态构建，托管于 GitHub Pages。
 
 **Site:** https://purebluesong.github.io
 
