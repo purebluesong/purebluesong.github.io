@@ -40,6 +40,19 @@ const groupLabels: Record<string, string> = {
 		<main>
 			<h1 class="page-title">信息整合</h1>
 			<p class="page-lede">不赶时间线的静态材料。按主题分册，条目可以一直加。</p>
+
+			<section class="group feature">
+				<h2>互动工具</h2>
+				<ul>
+					<li>
+						<a href="/hub/populations/">
+							<span class="title">人群分析</span>
+							<span class="excerpt">用互相可分离的垂直维度切分人群框架，筛选对照示例档案。</span>
+						</a>
+					</li>
+				</ul>
+			</section>
+
 			{
 				[...groups.entries()].map(([key, items]) => (
 					<section class="group">
