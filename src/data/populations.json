@@ -3,7 +3,8 @@
     "title": "人群分析",
     "subtitle": "用彼此尽量可分离的垂直维度，切分与对照人群框架。",
     "disclaimer": "以下维度与人群档案均为示例分析框架，不是实证调查结论，也不指向任何具名个人。",
-    "version": "2026-11-10"
+    "version": "2026-11-10",
+    "estimateNote": "estimateM 为示意相对规模（非人口普查），仅用于线宽与透明度对照。"
   },
   "dimensions": [
     {
@@ -13,11 +14,26 @@
       "whySeparable": "可独立于年龄、性别、政治立场等轴测量；虽与教育、职业相关，但本身描述的是资源存量而非学历或工种。",
       "correlationCaveats": "与受教育程度、职业类型、城乡常有相关，但同学历/同工种仍可出现大跨度分层。",
       "buckets": [
-        { "id": "low", "label": "低保障" },
-        { "id": "lower_mid", "label": "偏低" },
-        { "id": "mid", "label": "中等" },
-        { "id": "upper_mid", "label": "偏高" },
-        { "id": "high", "label": "高保障" }
+        {
+          "id": "low",
+          "label": "低保障"
+        },
+        {
+          "id": "lower_mid",
+          "label": "偏低"
+        },
+        {
+          "id": "mid",
+          "label": "中等"
+        },
+        {
+          "id": "upper_mid",
+          "label": "偏高"
+        },
+        {
+          "id": "high",
+          "label": "高保障"
+        }
       ]
     },
     {
@@ -27,11 +43,26 @@
       "whySeparable": "生物/时间轴，与其他社会维度正交；不依赖收入或立场即可标注。",
       "correlationCaveats": "与职业阶段、家庭结构、媒体环境常共变，但可单独固定后观察其他轴。",
       "buckets": [
-        { "id": "youth", "label": "少年" },
-        { "id": "young_adult", "label": "青年" },
-        { "id": "adult", "label": "壮年" },
-        { "id": "midlife", "label": "中年" },
-        { "id": "elder", "label": "老年" }
+        {
+          "id": "youth",
+          "label": "少年"
+        },
+        {
+          "id": "young_adult",
+          "label": "青年"
+        },
+        {
+          "id": "adult",
+          "label": "壮年"
+        },
+        {
+          "id": "midlife",
+          "label": "中年"
+        },
+        {
+          "id": "elder",
+          "label": "老年"
+        }
       ]
     },
     {
@@ -41,9 +72,18 @@
       "whySeparable": "与地区、教育、政治立场等轴可独立交叉；社会角色差异常沿此轴显现。",
       "correlationCaveats": "与职业类型、家庭角色期望存在结构性相关；桶设计刻意保持粗粒度。",
       "buckets": [
-        { "id": "female", "label": "女性" },
-        { "id": "male", "label": "男性" },
-        { "id": "other", "label": "其他/未标注" }
+        {
+          "id": "female",
+          "label": "女性"
+        },
+        {
+          "id": "male",
+          "label": "男性"
+        },
+        {
+          "id": "other",
+          "label": "其他/未标注"
+        }
       ]
     },
     {
@@ -53,12 +93,30 @@
       "whySeparable": "制度、市场与公共话语环境以地域为界；可与个人态度轴交叉而不互相定义。",
       "correlationCaveats": "与语言、媒体环境、城乡常纠缠；同国内部差异可能大于跨国平均差。",
       "buckets": [
-        { "id": "cn_mainland", "label": "中国大陆" },
-        { "id": "cn_hk_mo_tw", "label": "港澳台" },
-        { "id": "east_asia", "label": "东亚其他" },
-        { "id": "sea", "label": "东南亚" },
-        { "id": "west", "label": "欧美澳新" },
-        { "id": "other", "label": "其他地区" }
+        {
+          "id": "cn_mainland",
+          "label": "中国大陆"
+        },
+        {
+          "id": "cn_hk_mo_tw",
+          "label": "港澳台"
+        },
+        {
+          "id": "east_asia",
+          "label": "东亚其他"
+        },
+        {
+          "id": "sea",
+          "label": "东南亚"
+        },
+        {
+          "id": "west",
+          "label": "欧美澳新"
+        },
+        {
+          "id": "other",
+          "label": "其他地区"
+        }
       ]
     },
     {
@@ -68,10 +126,22 @@
       "whySeparable": "可观测的制度凭证轴，不等于收入或政治立场。",
       "correlationCaveats": "与社会经济地位、职业类型相关强，但「高学历低收入」等组合仍常见。",
       "buckets": [
-        { "id": "basic", "label": "基础教育及以下" },
-        { "id": "secondary", "label": "高中/职高" },
-        { "id": "college", "label": "大专/本科" },
-        { "id": "grad", "label": "研究生及以上" }
+        {
+          "id": "basic",
+          "label": "基础教育及以下"
+        },
+        {
+          "id": "secondary",
+          "label": "高中/职高"
+        },
+        {
+          "id": "college",
+          "label": "大专/本科"
+        },
+        {
+          "id": "grad",
+          "label": "研究生及以上"
+        }
       ]
     },
     {
@@ -81,10 +151,22 @@
       "whySeparable": "态度轴，可在同一阶级/年龄/地区内大幅分化。",
       "correlationCaveats": "与媒体环境、教育相关，但不是其线性函数；跨国语义不可直接平移。",
       "buckets": [
-        { "id": "left", "label": "偏左/再分配优先" },
-        { "id": "center", "label": "中间/务实折中" },
-        { "id": "right", "label": "偏右/秩序与市场优先" },
-        { "id": "apolitical", "label": "淡漠/不表态" }
+        {
+          "id": "left",
+          "label": "偏左/再分配优先"
+        },
+        {
+          "id": "center",
+          "label": "中间/务实折中"
+        },
+        {
+          "id": "right",
+          "label": "偏右/秩序与市场优先"
+        },
+        {
+          "id": "apolitical",
+          "label": "淡漠/不表态"
+        }
       ]
     },
     {
@@ -94,10 +176,22 @@
       "whySeparable": "空间形态轴，不等于收入或教育；同城内也可再细分。",
       "correlationCaveats": "与职业类型、媒体可达性相关；「城中村」等边界案例需人工判断。",
       "buckets": [
-        { "id": "metro", "label": "大都市核心" },
-        { "id": "city", "label": "一般城市" },
-        { "id": "town", "label": "县城/乡镇" },
-        { "id": "rural", "label": "乡村" }
+        {
+          "id": "metro",
+          "label": "大都市核心"
+        },
+        {
+          "id": "city",
+          "label": "一般城市"
+        },
+        {
+          "id": "town",
+          "label": "县城/乡镇"
+        },
+        {
+          "id": "rural",
+          "label": "乡村"
+        }
       ]
     },
     {
@@ -107,12 +201,30 @@
       "whySeparable": "描述「如何谋生」，可与收入水平、政治立场交叉。",
       "correlationCaveats": "与教育、社会经济地位相关；自由职业与平台劳动边界模糊。",
       "buckets": [
-        { "id": "manual", "label": "体力/一线劳动" },
-        { "id": "service", "label": "服务与照护" },
-        { "id": "clerical", "label": "文职/行政" },
-        { "id": "knowledge", "label": "知识/专业技术" },
-        { "id": "managerial", "label": "管理/经营" },
-        { "id": "care_unpaid", "label": "无酬照护/未就业" }
+        {
+          "id": "manual",
+          "label": "体力/一线劳动"
+        },
+        {
+          "id": "service",
+          "label": "服务与照护"
+        },
+        {
+          "id": "clerical",
+          "label": "文职/行政"
+        },
+        {
+          "id": "knowledge",
+          "label": "知识/专业技术"
+        },
+        {
+          "id": "managerial",
+          "label": "管理/经营"
+        },
+        {
+          "id": "care_unpaid",
+          "label": "无酬照护/未就业"
+        }
       ]
     },
     {
@@ -122,10 +234,22 @@
       "whySeparable": "规范性与意义来源轴，不完全由地区或政治立场决定。",
       "correlationCaveats": "与地区、政治常相关；「文化性宗教」与「虔信实践」需区分。",
       "buckets": [
-        { "id": "secular", "label": "世俗/无信仰" },
-        { "id": "cultural", "label": "文化性归属" },
-        { "id": "practicing", "label": "有规律实践" },
-        { "id": "devout", "label": "虔信核心" }
+        {
+          "id": "secular",
+          "label": "世俗/无信仰"
+        },
+        {
+          "id": "cultural",
+          "label": "文化性归属"
+        },
+        {
+          "id": "practicing",
+          "label": "有规律实践"
+        },
+        {
+          "id": "devout",
+          "label": "虔信核心"
+        }
       ]
     },
     {
@@ -135,10 +259,22 @@
       "whySeparable": "媒介与认知接口轴，可与国别不完全重合（侨民、双语社区）。",
       "correlationCaveats": "与地区、媒体环境强相关；双语者不适合只选一桶时标「双语」。",
       "buckets": [
-        { "id": "zh_mono", "label": "汉语主导" },
-        { "id": "bilingual_zh", "label": "汉英/汉多语双语" },
-        { "id": "en_dominant", "label": "英语主导" },
-        { "id": "other", "label": "其他语主导" }
+        {
+          "id": "zh_mono",
+          "label": "汉语主导"
+        },
+        {
+          "id": "bilingual_zh",
+          "label": "汉英/汉多语双语"
+        },
+        {
+          "id": "en_dominant",
+          "label": "英语主导"
+        },
+        {
+          "id": "other",
+          "label": "其他语主导"
+        }
       ]
     },
     {
@@ -148,11 +284,26 @@
       "whySeparable": "信息供给与注意力分配轴，不等于政治立场本身。",
       "correlationCaveats": "与年龄、政治、语言相关；同一人可跨多个圈层，取「主入口」。",
       "buckets": [
-        { "id": "broadcast", "label": "主流广电/门户" },
-        { "id": "domestic_social", "label": "国内社交/短视频" },
-        { "id": "global_social", "label": "国际社交/长内容" },
-        { "id": "niche_forum", "label": "垂直论坛/社群" },
-        { "id": "mixed", "label": "多源混杂" }
+        {
+          "id": "broadcast",
+          "label": "主流广电/门户"
+        },
+        {
+          "id": "domestic_social",
+          "label": "国内社交/短视频"
+        },
+        {
+          "id": "global_social",
+          "label": "国际社交/长内容"
+        },
+        {
+          "id": "niche_forum",
+          "label": "垂直论坛/社群"
+        },
+        {
+          "id": "mixed",
+          "label": "多源混杂"
+        }
       ]
     },
     {
@@ -162,10 +313,22 @@
       "whySeparable": "流动经历轴，可与当前城乡、地区交叉而不被其吞掉。",
       "correlationCaveats": "与社会经济地位、语言相关；「循环流动」难落入单桶。",
       "buckets": [
-        { "id": "local", "label": "本地长期定居" },
-        { "id": "internal", "label": "国内乡城/城际迁移" },
-        { "id": "return", "label": "回流/候鸟式" },
-        { "id": "cross_border", "label": "跨境居留" }
+        {
+          "id": "local",
+          "label": "本地长期定居"
+        },
+        {
+          "id": "internal",
+          "label": "国内乡城/城际迁移"
+        },
+        {
+          "id": "return",
+          "label": "回流/候鸟式"
+        },
+        {
+          "id": "cross_border",
+          "label": "跨境居留"
+        }
       ]
     }
   ],
@@ -222,7 +385,8 @@
         "language": "bilingual_zh",
         "media": "mixed",
         "migration": "internal"
-      }
+      },
+      "estimateM": 42
     },
     {
       "id": "ex-county-service-midlife",
@@ -242,7 +406,8 @@
         "language": "zh_mono",
         "media": "domestic_social",
         "migration": "local"
-      }
+      },
+      "estimateM": 36
     },
     {
       "id": "ex-rural-manual-adult",
@@ -262,7 +427,8 @@
         "language": "zh_mono",
         "media": "broadcast",
         "migration": "return"
-      }
+      },
+      "estimateM": 48
     },
     {
       "id": "ex-diaspora-grad-west",
@@ -282,7 +448,8 @@
         "language": "bilingual_zh",
         "media": "global_social",
         "migration": "cross_border"
-      }
+      },
+      "estimateM": 6
     },
     {
       "id": "ex-manager-upper-midlife",
@@ -302,7 +469,8 @@
         "language": "zh_mono",
         "media": "broadcast",
         "migration": "local"
-      }
+      },
+      "estimateM": 11
     },
     {
       "id": "ex-care-unpaid-elder",
@@ -322,7 +490,8 @@
         "language": "zh_mono",
         "media": "broadcast",
         "migration": "local"
-      }
+      },
+      "estimateM": 27
     },
     {
       "id": "ex-sea-trade-adult",
@@ -342,7 +511,8 @@
         "language": "other",
         "media": "niche_forum",
         "migration": "cross_border"
-      }
+      },
+      "estimateM": 14
     },
     {
       "id": "ex-clerical-young-city",
@@ -362,7 +532,8 @@
         "language": "zh_mono",
         "media": "domestic_social",
         "migration": "internal"
-      }
+      },
+      "estimateM": 39
     }
   ]
 }
