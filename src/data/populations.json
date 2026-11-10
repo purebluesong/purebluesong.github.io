@@ -1,0 +1,368 @@
+{
+  "meta": {
+    "title": "人群分析",
+    "subtitle": "用彼此尽量可分离的垂直维度，切分与对照人群框架。",
+    "disclaimer": "以下维度与人群档案均为示例分析框架，不是实证调查结论，也不指向任何具名个人。",
+    "version": "2026-11-10"
+  },
+  "dimensions": [
+    {
+      "id": "ses",
+      "label": "社会经济地位",
+      "definition": "相对资源与生活保障水平：收入、资产缓冲、抗风险能力。",
+      "whySeparable": "可独立于年龄、性别、政治立场等轴测量；虽与教育、职业相关，但本身描述的是资源存量而非学历或工种。",
+      "correlationCaveats": "与受教育程度、职业类型、城乡常有相关，但同学历/同工种仍可出现大跨度分层。",
+      "buckets": [
+        { "id": "low", "label": "低保障" },
+        { "id": "lower_mid", "label": "偏低" },
+        { "id": "mid", "label": "中等" },
+        { "id": "upper_mid", "label": "偏高" },
+        { "id": "high", "label": "高保障" }
+      ]
+    },
+    {
+      "id": "age",
+      "label": "年龄段",
+      "definition": "按人生阶段划分的年龄带，便于对照生命周期差异。",
+      "whySeparable": "生物/时间轴，与其他社会维度正交；不依赖收入或立场即可标注。",
+      "correlationCaveats": "与职业阶段、家庭结构、媒体环境常共变，但可单独固定后观察其他轴。",
+      "buckets": [
+        { "id": "youth", "label": "少年" },
+        { "id": "young_adult", "label": "青年" },
+        { "id": "adult", "label": "壮年" },
+        { "id": "midlife", "label": "中年" },
+        { "id": "elder", "label": "老年" }
+      ]
+    },
+    {
+      "id": "gender",
+      "label": "性别",
+      "definition": "自我标注的性别身份类别（分析用粗分桶，非完整性别谱系）。",
+      "whySeparable": "与地区、教育、政治立场等轴可独立交叉；社会角色差异常沿此轴显现。",
+      "correlationCaveats": "与职业类型、家庭角色期望存在结构性相关；桶设计刻意保持粗粒度。",
+      "buckets": [
+        { "id": "female", "label": "女性" },
+        { "id": "male", "label": "男性" },
+        { "id": "other", "label": "其他/未标注" }
+      ]
+    },
+    {
+      "id": "region",
+      "label": "国别/地区",
+      "definition": "主要生活或制度归属的地理—政治空间。",
+      "whySeparable": "制度、市场与公共话语环境以地域为界；可与个人态度轴交叉而不互相定义。",
+      "correlationCaveats": "与语言、媒体环境、城乡常纠缠；同国内部差异可能大于跨国平均差。",
+      "buckets": [
+        { "id": "cn_mainland", "label": "中国大陆" },
+        { "id": "cn_hk_mo_tw", "label": "港澳台" },
+        { "id": "east_asia", "label": "东亚其他" },
+        { "id": "sea", "label": "东南亚" },
+        { "id": "west", "label": "欧美澳新" },
+        { "id": "other", "label": "其他地区" }
+      ]
+    },
+    {
+      "id": "education",
+      "label": "受教育程度",
+      "definition": "正式学校教育达到的最高层级。",
+      "whySeparable": "可观测的制度凭证轴，不等于收入或政治立场。",
+      "correlationCaveats": "与社会经济地位、职业类型相关强，但「高学历低收入」等组合仍常见。",
+      "buckets": [
+        { "id": "basic", "label": "基础教育及以下" },
+        { "id": "secondary", "label": "高中/职高" },
+        { "id": "college", "label": "大专/本科" },
+        { "id": "grad", "label": "研究生及以上" }
+      ]
+    },
+    {
+      "id": "politics",
+      "label": "政治立场",
+      "definition": "对权威、再分配、社会秩序与变革速度的总体取向（粗分）。",
+      "whySeparable": "态度轴，可在同一阶级/年龄/地区内大幅分化。",
+      "correlationCaveats": "与媒体环境、教育相关，但不是其线性函数；跨国语义不可直接平移。",
+      "buckets": [
+        { "id": "left", "label": "偏左/再分配优先" },
+        { "id": "center", "label": "中间/务实折中" },
+        { "id": "right", "label": "偏右/秩序与市场优先" },
+        { "id": "apolitical", "label": "淡漠/不表态" }
+      ]
+    },
+    {
+      "id": "urbanicity",
+      "label": "城乡",
+      "definition": "主要居住与日常活动发生的空间形态。",
+      "whySeparable": "空间形态轴，不等于收入或教育；同城内也可再细分。",
+      "correlationCaveats": "与职业类型、媒体可达性相关；「城中村」等边界案例需人工判断。",
+      "buckets": [
+        { "id": "metro", "label": "大都市核心" },
+        { "id": "city", "label": "一般城市" },
+        { "id": "town", "label": "县城/乡镇" },
+        { "id": "rural", "label": "乡村" }
+      ]
+    },
+    {
+      "id": "occupation",
+      "label": "职业类型",
+      "definition": "主要劳动方式与组织位置（工种大类，非具体岗位名）。",
+      "whySeparable": "描述「如何谋生」，可与收入水平、政治立场交叉。",
+      "correlationCaveats": "与教育、社会经济地位相关；自由职业与平台劳动边界模糊。",
+      "buckets": [
+        { "id": "manual", "label": "体力/一线劳动" },
+        { "id": "service", "label": "服务与照护" },
+        { "id": "clerical", "label": "文职/行政" },
+        { "id": "knowledge", "label": "知识/专业技术" },
+        { "id": "managerial", "label": "管理/经营" },
+        { "id": "care_unpaid", "label": "无酬照护/未就业" }
+      ]
+    },
+    {
+      "id": "religiosity",
+      "label": "宗教/世俗",
+      "definition": "信仰实践与世界观中宗教元素的显著程度。",
+      "whySeparable": "规范性与意义来源轴，不完全由地区或政治立场决定。",
+      "correlationCaveats": "与地区、政治常相关；「文化性宗教」与「虔信实践」需区分。",
+      "buckets": [
+        { "id": "secular", "label": "世俗/无信仰" },
+        { "id": "cultural", "label": "文化性归属" },
+        { "id": "practicing", "label": "有规律实践" },
+        { "id": "devout", "label": "虔信核心" }
+      ]
+    },
+    {
+      "id": "language",
+      "label": "语言环境",
+      "definition": "日常主导沟通与信息获取所使用的语言生态。",
+      "whySeparable": "媒介与认知接口轴，可与国别不完全重合（侨民、双语社区）。",
+      "correlationCaveats": "与地区、媒体环境强相关；双语者不适合只选一桶时标「双语」。",
+      "buckets": [
+        { "id": "zh_mono", "label": "汉语主导" },
+        { "id": "bilingual_zh", "label": "汉英/汉多语双语" },
+        { "id": "en_dominant", "label": "英语主导" },
+        { "id": "other", "label": "其他语主导" }
+      ]
+    },
+    {
+      "id": "media",
+      "label": "媒体信息环境",
+      "definition": "主要信息入口的平台类型与话语圈层。",
+      "whySeparable": "信息供给与注意力分配轴，不等于政治立场本身。",
+      "correlationCaveats": "与年龄、政治、语言相关；同一人可跨多个圈层，取「主入口」。",
+      "buckets": [
+        { "id": "broadcast", "label": "主流广电/门户" },
+        { "id": "domestic_social", "label": "国内社交/短视频" },
+        { "id": "global_social", "label": "国际社交/长内容" },
+        { "id": "niche_forum", "label": "垂直论坛/社群" },
+        { "id": "mixed", "label": "多源混杂" }
+      ]
+    },
+    {
+      "id": "migration",
+      "label": "迁移状态",
+      "definition": "相对出生地/户籍锚定点的空间流动与居留稳定性。",
+      "whySeparable": "流动经历轴，可与当前城乡、地区交叉而不被其吞掉。",
+      "correlationCaveats": "与社会经济地位、语言相关；「循环流动」难落入单桶。",
+      "buckets": [
+        { "id": "local", "label": "本地长期定居" },
+        { "id": "internal", "label": "国内乡城/城际迁移" },
+        { "id": "return", "label": "回流/候鸟式" },
+        { "id": "cross_border", "label": "跨境居留" }
+      ]
+    }
+  ],
+  "droppedOrNested": [
+    {
+      "label": "文化资本/品味阶层",
+      "action": "drop",
+      "reason": "主要由受教育程度、职业类型与媒体信息环境复合而成，单独成轴易与三者重复计量。"
+    },
+    {
+      "label": "消费能力/生活方式阶层",
+      "action": "nest",
+      "nestUnder": "ses",
+      "reason": "更接近社会经济地位的外显，宜作为 SES 的指标而非平行主轴。"
+    },
+    {
+      "label": "代际/网络世代",
+      "action": "nest",
+      "nestUnder": "age",
+      "reason": "核心是年龄队列；若强调信息习惯，应与媒体信息环境交叉，而非第三主轴。"
+    },
+    {
+      "label": "社会流动方向",
+      "action": "drop",
+      "reason": "描述过程与轨迹，不是可同时切分人口的状态维度；需要纵向数据。"
+    },
+    {
+      "label": "种族/民族",
+      "action": "drop",
+      "reason": "在跨国框架中与国别、语言高度纠缠，且易滑向敏感识别；本工具暂不单列主轴。"
+    },
+    {
+      "label": "健康/残障状况",
+      "action": "drop",
+      "reason": "可分离，但属敏感医疗信息，超出当前公开分析框架范围。"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "ex-metro-knowledge-youth",
+      "title": "都市知识青年框架",
+      "summary": "大城市、高校学历、知识劳动为主的青年对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "mid",
+        "age": "young_adult",
+        "gender": "other",
+        "region": "cn_mainland",
+        "education": "college",
+        "politics": "center",
+        "urbanicity": "metro",
+        "occupation": "knowledge",
+        "religiosity": "secular",
+        "language": "bilingual_zh",
+        "media": "mixed",
+        "migration": "internal"
+      }
+    },
+    {
+      "id": "ex-county-service-midlife",
+      "title": "县城服务业中年框架",
+      "summary": "县城空间、服务劳动、家庭责任加重阶段的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "lower_mid",
+        "age": "midlife",
+        "gender": "female",
+        "region": "cn_mainland",
+        "education": "secondary",
+        "politics": "apolitical",
+        "urbanicity": "town",
+        "occupation": "service",
+        "religiosity": "cultural",
+        "language": "zh_mono",
+        "media": "domestic_social",
+        "migration": "local"
+      }
+    },
+    {
+      "id": "ex-rural-manual-adult",
+      "title": "乡村一线劳动壮年框架",
+      "summary": "乡村或近乡空间、体力劳动、基础教育背景的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "low",
+        "age": "adult",
+        "gender": "male",
+        "region": "cn_mainland",
+        "education": "basic",
+        "politics": "apolitical",
+        "urbanicity": "rural",
+        "occupation": "manual",
+        "religiosity": "cultural",
+        "language": "zh_mono",
+        "media": "broadcast",
+        "migration": "return"
+      }
+    },
+    {
+      "id": "ex-diaspora-grad-west",
+      "title": "跨境高学历侨居框架",
+      "summary": "欧美澳新居留、研究生学历、跨语媒体环境的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "upper_mid",
+        "age": "adult",
+        "gender": "other",
+        "region": "west",
+        "education": "grad",
+        "politics": "left",
+        "urbanicity": "metro",
+        "occupation": "knowledge",
+        "religiosity": "secular",
+        "language": "bilingual_zh",
+        "media": "global_social",
+        "migration": "cross_border"
+      }
+    },
+    {
+      "id": "ex-manager-upper-midlife",
+      "title": "城市经营管理中年框架",
+      "summary": "偏高保障、管理经营岗位、务实折中立场的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "high",
+        "age": "midlife",
+        "gender": "male",
+        "region": "cn_mainland",
+        "education": "college",
+        "politics": "right",
+        "urbanicity": "city",
+        "occupation": "managerial",
+        "religiosity": "secular",
+        "language": "zh_mono",
+        "media": "broadcast",
+        "migration": "local"
+      }
+    },
+    {
+      "id": "ex-care-unpaid-elder",
+      "title": "无酬照护老年框架",
+      "summary": "家庭照护与未就业状态叠加、信息入口偏主流广电的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "lower_mid",
+        "age": "elder",
+        "gender": "female",
+        "region": "cn_mainland",
+        "education": "basic",
+        "politics": "center",
+        "urbanicity": "city",
+        "occupation": "care_unpaid",
+        "religiosity": "cultural",
+        "language": "zh_mono",
+        "media": "broadcast",
+        "migration": "local"
+      }
+    },
+    {
+      "id": "ex-sea-trade-adult",
+      "title": "东南亚商贸壮年框架",
+      "summary": "东南亚地区、经营取向、多语与垂直社群信息的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "mid",
+        "age": "adult",
+        "gender": "male",
+        "region": "sea",
+        "education": "secondary",
+        "politics": "center",
+        "urbanicity": "city",
+        "occupation": "managerial",
+        "religiosity": "practicing",
+        "language": "other",
+        "media": "niche_forum",
+        "migration": "cross_border"
+      }
+    },
+    {
+      "id": "ex-clerical-young-city",
+      "title": "城市文职青年框架",
+      "summary": "一般城市文职岗位、国内社交主入口、淡漠政治表达的对照框。",
+      "tone": "示例框架",
+      "traits": {
+        "ses": "mid",
+        "age": "young_adult",
+        "gender": "female",
+        "region": "cn_mainland",
+        "education": "college",
+        "politics": "apolitical",
+        "urbanicity": "city",
+        "occupation": "clerical",
+        "religiosity": "secular",
+        "language": "zh_mono",
+        "media": "domestic_social",
+        "migration": "internal"
+      }
+    }
+  ]
+}
